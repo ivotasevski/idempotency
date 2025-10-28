@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "a03660ee-1525-4092-b742-34919cd88649",
+		"name": "Idempotency",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4314467",
+		"_collection_link": "https://solar-trinity-209844.postman.co/workspace/Allwyn~2384e2d7-da23-488f-a843-e3a7992aca73/collection/4314467-a03660ee-1525-4092-b742-34919cd88649?action=share&source=collection_link&creator=4314467"
+	},
+	"item": [
+		{
+			"name": "example/2xx",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Generate a new UUID v4",
+							"const uuid = crypto.randomUUID();",
+							"",
+							"// Store it in an environment variable",
+							"pm.environment.set(\"xRequestId\", uuid);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/2xx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"2xx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example/2xx retry",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/2xx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"2xx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example/4xx",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Generate a new UUID v4",
+							"const uuid = crypto.randomUUID();",
+							"",
+							"// Store it in an environment variable",
+							"pm.environment.set(\"xRequestId\", uuid);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/4xx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"4xx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example/4xx retry",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/4xx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"4xx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example/5xx",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Generate a new UUID v4",
+							"const uuid = crypto.randomUUID();",
+							"",
+							"// Store it in an environment variable",
+							"pm.environment.set(\"xRequestId\", uuid);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/5xx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"5xx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example/5xx retry",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/5xx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"5xx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example/2xx/long",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Generate a new UUID v4",
+							"const uuid = crypto.randomUUID();",
+							"",
+							"// Store it in an environment variable",
+							"pm.environment.set(\"xRequestId\", uuid);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/2xx/long",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"2xx",
+						"long"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example/2xx/long retry",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/2xx/long",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"2xx",
+						"long"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example/non-idempotent",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Id",
+						"value": "{{xRequestId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/example/non-idempotent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example",
+						"non-idempotent"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
