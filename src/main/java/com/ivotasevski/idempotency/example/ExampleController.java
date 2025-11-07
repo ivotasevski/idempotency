@@ -2,14 +2,14 @@ package com.ivotasevski.idempotency.example;
 
 import com.ivotasevski.idempotency.action.Action;
 import com.ivotasevski.idempotency.action.IdempotentAction;
+import com.ivotasevski.idempotency.exception.PermanentException;
+import com.ivotasevski.idempotency.exception.TransientException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 import java.util.UUID;
@@ -35,16 +35,16 @@ public class ExampleController {
     }
 
     @SneakyThrows
-    @PostMapping("/4xx")
+    @PostMapping("/permanent")
     @IdempotentAction(action = Action.PAYMENT)
-    public Map<String, Object> e4xx() {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request");
+    public Map<String, Object> permanentError() {
+        throw new PermanentException("This is intentional permanent exception");
     }
 
-    @PostMapping("/5xx")
+    @PostMapping("/transient")
     @IdempotentAction(action = Action.PAYMENT)
-    public Map<String, Object> e5xx() {
-        throw new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, "Gateway Timeout");
+    public Map<String, Object> transientError() {
+        throw new TransientException("This is intentional transient exception");
     }
 
     // this endpoint should not go through the filter as it is not annotated

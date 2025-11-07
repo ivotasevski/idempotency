@@ -29,7 +29,7 @@ public class IdempotencyConfig {
     @Bean
     public FilterRegistrationBean<IdempotentHandlingFilter> idempotentFilter(IdempotentHandlingFilter filter) {
         FilterRegistrationBean<IdempotentHandlingFilter> reg = new FilterRegistrationBean<>(filter);
-        reg.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.ERROR);
+        reg.setDispatcherTypes(DispatcherType.REQUEST);
         return reg;
     }
 

@@ -91,7 +91,7 @@
 			"response": []
 		},
 		{
-			"name": "example/4xx",
+			"name": "example/permanent",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -135,7 +135,7 @@
 			"response": []
 		},
 		{
-			"name": "example/4xx retry",
+			"name": "example/permanent retry",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -159,7 +159,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/example/4xx",
+					"raw": "http://localhost:8080/example/permanent",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -167,14 +167,14 @@
 					"port": "8080",
 					"path": [
 						"example",
-						"4xx"
+						"permanent"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "example/5xx",
+			"name": "example/transient",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -203,7 +203,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/example/5xx",
+					"raw": "http://localhost:8080/example/transient",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -211,14 +211,14 @@
 					"port": "8080",
 					"path": [
 						"example",
-						"5xx"
+						"transient"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "example/5xx retry",
+			"name": "example/transient retry",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -242,7 +242,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/example/5xx",
+					"raw": "http://localhost:8080/example/transient",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -250,7 +250,7 @@
 					"port": "8080",
 					"path": [
 						"example",
-						"5xx"
+						"transient"
 					]
 				}
 			},

@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -47,26 +48,20 @@ public class IdempotentHandlingFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-        Action actionKey = idempotentEndpointRegistry.getActionForPath(httpServletRequest.getRequestURI())
-                .orElse((Action) request.getAttribute(IDEMPOTENT_ACTION_ATTR));
+        Action actionKey = idempotentEndpointRegistry.getActionForPathAndMethod(
+                httpServletRequest.getRequestURI(), HttpMethod.valueOf(httpServletRequest.getMethod())).orElse(null);
         if (actionKey == null) {
             // non-idempotent action, skip filter logic
             chain.doFilter(request, response);
             return;
         }
 
-        request.setAttribute(IDEMPOTENT_ACTION_ATTR, actionKey);
-
         var requestWrapper = getRequestWrapper(httpServletRequest);
         var responseWrapper = getResponseWrapper((HttpServletResponse) response);
 
-        // Persist request only for original request
-        // (skip Error dispatch when exception in original request is thrown)
-        if (request.getDispatcherType() != DispatcherType.ERROR) {
-            // persist request, or return immediate response if it exists
-            if (!handleIdempotentRequest(actionKey, requestWrapper, responseWrapper)) {
-                return;
-            }
+        // persist request, or return immediate response if it exists
+        if (!handleIdempotentRequest(actionKey, requestWrapper, responseWrapper)) {
+            return;
         }
 
         // Continue with the filter chain (controller, interceptors, etc.)
@@ -212,10 +207,11 @@ public class IdempotentHandlingFilter implements Filter {
         HttpStatus status = HttpStatus.valueOf(statusCode);
         if (status.is2xxSuccessful()) {
             return IdempotentRequestStatus.SUCCESS;
-        } else if (status.is4xxClientError()) {
-            return IdempotentRequestStatus.PENDING_COMPENSATION;
-        } else {
+        } else if (status == HttpStatus.SERVICE_UNAVAILABLE) {
+            // retryable
             return IdempotentRequestStatus.UNDEFINED;
+        } else {
+            return IdempotentRequestStatus.PENDING_COMPENSATION;
         }
     }
 }
